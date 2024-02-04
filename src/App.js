@@ -1,24 +1,30 @@
-import logo from './logo.svg';
 import './App.css';
 
+import { useState } from 'react';
+import PhoneBookForm from './components/PhoneBookForm';
+import InformationTable from './components/InformationTable';
+import DataList from './components/DataList';
+import Counter from './components/Counter';
+import Toggle from './components/Toggle';
+
 function App() {
+const [entries, setEntries] = useState([]);
+
+const addEntryToPhoneBook = (entry) => {
+  let orderedEntries = [...entries, entry].sort((a, b) => {  
+    return a.lastName.localeCompare(b.lastName);
+  });
+  setEntries(orderedEntries);
+};
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <section>
+      <PhoneBookForm addEntryToPhoneBook={addEntryToPhoneBook} />
+      <InformationTable entries={entries} />
+      <DataList />
+      <Toggle />
+      <Counter />
+      
+    </section>
   );
 }
 
